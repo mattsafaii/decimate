@@ -2,6 +2,8 @@
 /// new effects are added here and picked up automatically.
 enum EffectCatalog {
     static let all: [any Effect] = [
+        FloydSteinbergEffect(),
+        BayerEffect(),
         HalftoneEffect(),
         NoiseEffect(),
     ]
