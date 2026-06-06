@@ -1,1 +1,6 @@
 .basecamp/
+.DS_Store
+xcuserdata/
+DerivedData/
+build/
+*.xcuserstate
