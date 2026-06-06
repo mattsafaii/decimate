@@ -16,6 +16,7 @@
 		77C872D1D3FC2F63A5D4D497 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934613FFAAD457716CE0DDEE /* AppState.swift */; };
 		85B8AD6668CFA812AC316F4A /* DecimateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF5F1D7347DA029AAA5010A /* DecimateApp.swift */; };
 		86460BDB7009EA98B3ABECB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B6E0A3CA348EC9CCEC518EF /* Assets.xcassets */; };
+		B413E9C5348246B4FB56206E /* PythonBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405BDFDDAFFF6A56D12F89E1 /* PythonBridge.swift */; };
 		BBCBFE29A703F5BF9D2AB8A4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A8A54F5B6FE6A3DCC36F04 /* ContentView.swift */; };
 		C773E0BF1E18F9862BA16139 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9790069FBC3F4D34A5808D /* Effect.swift */; };
 		CA26647233F0A2E08F626D3E /* CoreImageEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B914C65D7B5C69EDCA5080E /* CoreImageEngine.swift */; };
@@ -30,6 +31,7 @@
 /* Begin PBXFileReference section */
 		1C9790069FBC3F4D34A5808D /* Effect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
 		31A8A54F5B6FE6A3DCC36F04 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		405BDFDDAFFF6A56D12F89E1 /* PythonBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PythonBridge.swift; sourceTree = "<group>"; };
 		4B914C65D7B5C69EDCA5080E /* CoreImageEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreImageEngine.swift; sourceTree = "<group>"; };
 		5A30CAFC7D002D31762513BD /* PixelEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelEngine.swift; sourceTree = "<group>"; };
 		5B6E0A3CA348EC9CCEC518EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 		B215F9F6DA5DFC4D91D7047F /* Python */ = {
 			isa = PBXGroup;
 			children = (
+				405BDFDDAFFF6A56D12F89E1 /* PythonBridge.swift */,
 				A4D863DAE460675D35440C7E /* PythonEnvironment.swift */,
 				88ADD66D6DAA9A95FC7B9DA7 /* Subprocess.swift */,
 			);
@@ -200,6 +203,7 @@
 				471D7E7EFA3EC4AEE664987B /* NoiseEffect.swift in Sources */,
 				E785FCE4850881BAC5A96B6B /* ParameterPanel.swift in Sources */,
 				2133847750700DC751491B48 /* PixelEngine.swift in Sources */,
+				B413E9C5348246B4FB56206E /* PythonBridge.swift in Sources */,
 				E9860D316D52C2A310D5335C /* PythonEnvironment.swift in Sources */,
 				CEBC2AEEFD97B16DF2ED2DE6 /* Subprocess.swift in Sources */,
 			);
