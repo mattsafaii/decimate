@@ -17,6 +17,18 @@ struct ContentView: View {
                     state.isImporterPresented = true
                 }
             }
+            ToolbarItem {
+                if state.isExporting {
+                    ProgressView()
+                        .controlSize(.small)
+                } else {
+                    Button("Export…", systemImage: "square.and.arrow.up") {
+                        state.export()
+                    }
+                    .keyboardShortcut("e", modifiers: .command)
+                    .disabled(state.sourceImage == nil || state.selectedEffect == nil)
+                }
+            }
         }
         .fileImporter(
             isPresented: $state.isImporterPresented,
@@ -44,6 +56,17 @@ struct ContentView: View {
             Button("OK", role: .cancel) {}
         } message: {
             Text(state.loadErrorMessage ?? "")
+        }
+        .alert(
+            "Export Failed",
+            isPresented: Binding(
+                get: { state.exportErrorMessage != nil },
+                set: { if !$0 { state.exportErrorMessage = nil } }
+            )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(state.exportErrorMessage ?? "")
         }
     }
 

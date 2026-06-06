@@ -17,6 +17,8 @@ final class AppState {
     var previewImage: CGImage?
     var isRenderingPreview = false
     var renderErrorMessage: String?
+    var isExporting = false
+    var exportErrorMessage: String?
 
     private var previewTask: Task<Void, Never>?
 
