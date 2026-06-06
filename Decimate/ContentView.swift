@@ -46,6 +46,9 @@ struct ContentView: View {
         .task {
             await state.pythonEnvironment.setUpIfNeeded()
         }
+        .task {
+            await DebugHarness.run(state: state)
+        }
         .alert(
             "Couldn't Open Image",
             isPresented: Binding(

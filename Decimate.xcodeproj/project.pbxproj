@@ -30,6 +30,7 @@
 		E92B9D12AA2BE499DC2EFD75 /* StippleRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1DBDF0956887D7F7130882 /* StippleRenderer.swift */; };
 		E9860D316D52C2A310D5335C /* PythonEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D863DAE460675D35440C7E /* PythonEnvironment.swift */; };
 		EC28F65675712001243FACA8 /* FloydSteinbergEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6AE2D0EBAF0F7D035F430D /* FloydSteinbergEffect.swift */; };
+		EFF7D2E5779F556A372677F9 /* DebugHarness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D03A908AF42E01228CC0F06 /* DebugHarness.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 		874BDF3DF3039EE9D47A77CF /* python */ = {isa = PBXFileReference; lastKnownFileType = folder; path = python; sourceTree = SOURCE_ROOT; };
 		88ADD66D6DAA9A95FC7B9DA7 /* Subprocess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subprocess.swift; sourceTree = "<group>"; };
 		934613FFAAD457716CE0DDEE /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		9D03A908AF42E01228CC0F06 /* DebugHarness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugHarness.swift; sourceTree = "<group>"; };
 		9D3805954EFCA46D7BD83DEE /* BayerEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BayerEffect.swift; sourceTree = "<group>"; };
 		9F7E2661E80BB0E6D6D73B0D /* ParameterPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterPanel.swift; sourceTree = "<group>"; };
 		A0CCAB536D4627D685EB3770 /* EffectDeclaration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectDeclaration.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				934613FFAAD457716CE0DDEE /* AppState.swift */,
 				5B6E0A3CA348EC9CCEC518EF /* Assets.xcassets */,
 				31A8A54F5B6FE6A3DCC36F04 /* ContentView.swift */,
+				9D03A908AF42E01228CC0F06 /* DebugHarness.swift */,
 				DEF5F1D7347DA029AAA5010A /* DecimateApp.swift */,
 				328AE2F8BB3F6C0A6477D4C4 /* Exporter.swift */,
 				D4B59306553D254F6812BC20 /* ImageLoader.swift */,
@@ -205,6 +208,7 @@
 				0B7124097EE9679F5F6A8E67 /* BayerEffect.swift in Sources */,
 				BBCBFE29A703F5BF9D2AB8A4 /* ContentView.swift in Sources */,
 				CA26647233F0A2E08F626D3E /* CoreImageEngine.swift in Sources */,
+				EFF7D2E5779F556A372677F9 /* DebugHarness.swift in Sources */,
 				85B8AD6668CFA812AC316F4A /* DecimateApp.swift in Sources */,
 				C773E0BF1E18F9862BA16139 /* Effect.swift in Sources */,
 				10D2CCB02DE44C699F169CB9 /* EffectCatalog.swift in Sources */,
