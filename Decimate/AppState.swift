@@ -7,7 +7,7 @@ import Observation
 @MainActor
 @Observable
 final class AppState {
-    let pythonEnvironment = PythonEnvironment()
+    let pythonEnvironment = PythonEnvironment.shared
     var sourceImage: CGImage?
     var sourceURL: URL?
     var selectedEffectID: String?

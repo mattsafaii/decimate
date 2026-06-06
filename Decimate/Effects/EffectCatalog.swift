@@ -2,6 +2,7 @@
 /// new effects are added here and picked up automatically.
 enum EffectCatalog {
     static let all: [any Effect] = [
+        StipplingEffect(),
         FloydSteinbergEffect(),
         BayerEffect(),
         HalftoneEffect(),

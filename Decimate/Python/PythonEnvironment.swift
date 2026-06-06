@@ -15,6 +15,8 @@ final class PythonEnvironment {
         case failed(String)
     }
 
+    static let shared = PythonEnvironment()
+
     private(set) var status: Status = .checking
 
     let venvDirectory: URL

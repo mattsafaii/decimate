@@ -23,13 +23,17 @@
 		CEBC2AEEFD97B16DF2ED2DE6 /* Subprocess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88ADD66D6DAA9A95FC7B9DA7 /* Subprocess.swift */; };
 		D188803695C708A22612A675 /* HalftoneEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF057C6F80F7A78C74F53AE4 /* HalftoneEffect.swift */; };
 		D3FC1C4CCEE32FB944444413 /* python in Resources */ = {isa = PBXBuildFile; fileRef = 874BDF3DF3039EE9D47A77CF /* python */; };
+		DE92190951A41AA082F11A5A /* StipplingEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EC1EC939170D80E360AA07 /* StipplingEffect.swift */; };
 		E785FCE4850881BAC5A96B6B /* ParameterPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7E2661E80BB0E6D6D73B0D /* ParameterPanel.swift */; };
+		E92B9D12AA2BE499DC2EFD75 /* StippleRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1DBDF0956887D7F7130882 /* StippleRenderer.swift */; };
 		E9860D316D52C2A310D5335C /* PythonEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D863DAE460675D35440C7E /* PythonEnvironment.swift */; };
 		EC28F65675712001243FACA8 /* FloydSteinbergEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6AE2D0EBAF0F7D035F430D /* FloydSteinbergEffect.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B1DBDF0956887D7F7130882 /* StippleRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StippleRenderer.swift; sourceTree = "<group>"; };
 		1C9790069FBC3F4D34A5808D /* Effect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
+		28EC1EC939170D80E360AA07 /* StipplingEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StipplingEffect.swift; sourceTree = "<group>"; };
 		31A8A54F5B6FE6A3DCC36F04 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		405BDFDDAFFF6A56D12F89E1 /* PythonBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PythonBridge.swift; sourceTree = "<group>"; };
 		4B914C65D7B5C69EDCA5080E /* CoreImageEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreImageEngine.swift; sourceTree = "<group>"; };
@@ -79,6 +83,8 @@
 				DF057C6F80F7A78C74F53AE4 /* HalftoneEffect.swift */,
 				C545B36F6DED4C9CC2EC9BB2 /* NoiseEffect.swift */,
 				5A30CAFC7D002D31762513BD /* PixelEngine.swift */,
+				0B1DBDF0956887D7F7130882 /* StippleRenderer.swift */,
+				28EC1EC939170D80E360AA07 /* StipplingEffect.swift */,
 			);
 			path = Effects;
 			sourceTree = "<group>";
@@ -205,6 +211,8 @@
 				2133847750700DC751491B48 /* PixelEngine.swift in Sources */,
 				B413E9C5348246B4FB56206E /* PythonBridge.swift in Sources */,
 				E9860D316D52C2A310D5335C /* PythonEnvironment.swift in Sources */,
+				E92B9D12AA2BE499DC2EFD75 /* StippleRenderer.swift in Sources */,
+				DE92190951A41AA082F11A5A /* StipplingEffect.swift in Sources */,
 				CEBC2AEEFD97B16DF2ED2DE6 /* Subprocess.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
