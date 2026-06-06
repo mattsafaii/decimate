@@ -2,6 +2,8 @@
 /// new effects are added here and picked up automatically.
 enum EffectCatalog {
     static let all: [any Effect] = [
+        HalftoneEffect(),
+        NoiseEffect(),
     ]
 
     static func effect(id: String) -> (any Effect)? {
