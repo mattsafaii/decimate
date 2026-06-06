@@ -7,205 +7,256 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D3C1000000000000000000A7 /* python in Resources */ = {isa = PBXBuildFile; fileRef = D3C1000000000000000000A6 /* python */; };
+		0B7124097EE9679F5F6A8E67 /* BayerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3805954EFCA46D7BD83DEE /* BayerEffect.swift */; };
+		10D2CCB02DE44C699F169CB9 /* EffectCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7228B0A8B99B8E16E6569113 /* EffectCatalog.swift */; };
+		2133847750700DC751491B48 /* PixelEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A30CAFC7D002D31762513BD /* PixelEngine.swift */; };
+		3E74A3489071C130D79FB27B /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B59306553D254F6812BC20 /* ImageLoader.swift */; };
+		471D7E7EFA3EC4AEE664987B /* NoiseEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C545B36F6DED4C9CC2EC9BB2 /* NoiseEffect.swift */; };
+		4D2C44AA1333C8F3D70CB365 /* EffectDeclaration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CCAB536D4627D685EB3770 /* EffectDeclaration.swift */; };
+		77C872D1D3FC2F63A5D4D497 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934613FFAAD457716CE0DDEE /* AppState.swift */; };
+		85B8AD6668CFA812AC316F4A /* DecimateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF5F1D7347DA029AAA5010A /* DecimateApp.swift */; };
+		86460BDB7009EA98B3ABECB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B6E0A3CA348EC9CCEC518EF /* Assets.xcassets */; };
+		BBCBFE29A703F5BF9D2AB8A4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A8A54F5B6FE6A3DCC36F04 /* ContentView.swift */; };
+		C773E0BF1E18F9862BA16139 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9790069FBC3F4D34A5808D /* Effect.swift */; };
+		CA26647233F0A2E08F626D3E /* CoreImageEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B914C65D7B5C69EDCA5080E /* CoreImageEngine.swift */; };
+		D188803695C708A22612A675 /* HalftoneEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF057C6F80F7A78C74F53AE4 /* HalftoneEffect.swift */; };
+		D3FC1C4CCEE32FB944444413 /* python in Resources */ = {isa = PBXBuildFile; fileRef = 874BDF3DF3039EE9D47A77CF /* python */; };
+		E785FCE4850881BAC5A96B6B /* ParameterPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7E2661E80BB0E6D6D73B0D /* ParameterPanel.swift */; };
+		EC28F65675712001243FACA8 /* FloydSteinbergEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6AE2D0EBAF0F7D035F430D /* FloydSteinbergEffect.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		D3C1000000000000000000A3 /* Decimate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Decimate.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D3C1000000000000000000A6 /* python */ = {isa = PBXFileReference; lastKnownFileType = folder; path = python; sourceTree = "<group>"; };
+		1C9790069FBC3F4D34A5808D /* Effect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
+		31A8A54F5B6FE6A3DCC36F04 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4B914C65D7B5C69EDCA5080E /* CoreImageEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreImageEngine.swift; sourceTree = "<group>"; };
+		5A30CAFC7D002D31762513BD /* PixelEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelEngine.swift; sourceTree = "<group>"; };
+		5B6E0A3CA348EC9CCEC518EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7228B0A8B99B8E16E6569113 /* EffectCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectCatalog.swift; sourceTree = "<group>"; };
+		874BDF3DF3039EE9D47A77CF /* python */ = {isa = PBXFileReference; lastKnownFileType = folder; path = python; sourceTree = SOURCE_ROOT; };
+		934613FFAAD457716CE0DDEE /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		9D3805954EFCA46D7BD83DEE /* BayerEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BayerEffect.swift; sourceTree = "<group>"; };
+		9F7E2661E80BB0E6D6D73B0D /* ParameterPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterPanel.swift; sourceTree = "<group>"; };
+		A0CCAB536D4627D685EB3770 /* EffectDeclaration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectDeclaration.swift; sourceTree = "<group>"; };
+		C545B36F6DED4C9CC2EC9BB2 /* NoiseEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoiseEffect.swift; sourceTree = "<group>"; };
+		D4B59306553D254F6812BC20 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		DEF5F1D7347DA029AAA5010A /* DecimateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimateApp.swift; sourceTree = "<group>"; };
+		DF057C6F80F7A78C74F53AE4 /* HalftoneEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalftoneEffect.swift; sourceTree = "<group>"; };
+		ED6AE2D0EBAF0F7D035F430D /* FloydSteinbergEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloydSteinbergEffect.swift; sourceTree = "<group>"; };
+		F9C9C869DA44FA622C54A256 /* Decimate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Decimate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		D3C1000000000000000000A5 /* Decimate */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
+/* Begin PBXGroup section */
+		0D145E351B530C03E92BD0D1 /* Decimate */ = {
+			isa = PBXGroup;
+			children = (
+				934613FFAAD457716CE0DDEE /* AppState.swift */,
+				5B6E0A3CA348EC9CCEC518EF /* Assets.xcassets */,
+				31A8A54F5B6FE6A3DCC36F04 /* ContentView.swift */,
+				DEF5F1D7347DA029AAA5010A /* DecimateApp.swift */,
+				D4B59306553D254F6812BC20 /* ImageLoader.swift */,
+				17F04DFF39523CC962BC313A /* Effects */,
+				5D60A032747EA81F201C7939 /* UI */,
+			);
 			path = Decimate;
 			sourceTree = "<group>";
 		};
-/* End PBXFileSystemSynchronizedRootGroup section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		D3C1000000000000000000B2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXGroup section */
-		D3C1000000000000000000A1 = {
+		17F04DFF39523CC962BC313A /* Effects */ = {
 			isa = PBXGroup;
 			children = (
-				D3C1000000000000000000A5 /* Decimate */,
-				D3C1000000000000000000A6 /* python */,
-				D3C1000000000000000000A2 /* Products */,
+				9D3805954EFCA46D7BD83DEE /* BayerEffect.swift */,
+				4B914C65D7B5C69EDCA5080E /* CoreImageEngine.swift */,
+				1C9790069FBC3F4D34A5808D /* Effect.swift */,
+				7228B0A8B99B8E16E6569113 /* EffectCatalog.swift */,
+				A0CCAB536D4627D685EB3770 /* EffectDeclaration.swift */,
+				ED6AE2D0EBAF0F7D035F430D /* FloydSteinbergEffect.swift */,
+				DF057C6F80F7A78C74F53AE4 /* HalftoneEffect.swift */,
+				C545B36F6DED4C9CC2EC9BB2 /* NoiseEffect.swift */,
+				5A30CAFC7D002D31762513BD /* PixelEngine.swift */,
+			);
+			path = Effects;
+			sourceTree = "<group>";
+		};
+		40AE8CDF18FC5ABA3BD9792E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F9C9C869DA44FA622C54A256 /* Decimate.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		50D37DB3056E602978B79B00 = {
+			isa = PBXGroup;
+			children = (
+				874BDF3DF3039EE9D47A77CF /* python */,
+				0D145E351B530C03E92BD0D1 /* Decimate */,
+				40AE8CDF18FC5ABA3BD9792E /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		D3C1000000000000000000A2 /* Products */ = {
+		5D60A032747EA81F201C7939 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				D3C1000000000000000000A3 /* Decimate.app */,
+				9F7E2661E80BB0E6D6D73B0D /* ParameterPanel.swift */,
 			);
-			name = Products;
+			path = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D3C1000000000000000000A4 /* Decimate */ = {
+		1521B86AF5D3A4FBDC469A70 /* Decimate */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D3C1000000000000000000C3 /* Build configuration list for PBXNativeTarget "Decimate" */;
+			buildConfigurationList = 5D45F059197D611EC6C9CCA0 /* Build configuration list for PBXNativeTarget "Decimate" */;
 			buildPhases = (
-				D3C1000000000000000000B1 /* Sources */,
-				D3C1000000000000000000B2 /* Frameworks */,
-				D3C1000000000000000000B3 /* Resources */,
+				96AA1BAD8133439B6B25DB43 /* Sources */,
+				742AC6E5FA4B1231AEF5CF6F /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				D3C1000000000000000000A5 /* Decimate */,
-			);
 			name = Decimate;
 			packageProductDependencies = (
 			);
 			productName = Decimate;
-			productReference = D3C1000000000000000000A3 /* Decimate.app */;
+			productReference = F9C9C869DA44FA622C54A256 /* Decimate.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D3C1000000000000000000A0 /* Project object */ = {
+		B1A758211E58ACB1ABA9D196 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2650;
-				LastUpgradeCheck = 2650;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
-					D3C1000000000000000000A4 = {
-						CreatedOnToolsVersion = 26.5;
+					1521B86AF5D3A4FBDC469A70 = {
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = D3C1000000000000000000C0 /* Build configuration list for PBXProject "Decimate" */;
+			buildConfigurationList = 66D2075006BECE26BFFFE0DA /* Build configuration list for PBXProject "Decimate" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				en,
 			);
-			mainGroup = D3C1000000000000000000A1;
+			mainGroup = 50D37DB3056E602978B79B00;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = D3C1000000000000000000A2 /* Products */;
+			productRefGroup = 40AE8CDF18FC5ABA3BD9792E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D3C1000000000000000000A4 /* Decimate */,
+				1521B86AF5D3A4FBDC469A70 /* Decimate */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D3C1000000000000000000B3 /* Resources */ = {
+		742AC6E5FA4B1231AEF5CF6F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3C1000000000000000000A7 /* python in Resources */,
+				86460BDB7009EA98B3ABECB7 /* Assets.xcassets in Resources */,
+				D3FC1C4CCEE32FB944444413 /* python in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		D3C1000000000000000000B1 /* Sources */ = {
+		96AA1BAD8133439B6B25DB43 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77C872D1D3FC2F63A5D4D497 /* AppState.swift in Sources */,
+				0B7124097EE9679F5F6A8E67 /* BayerEffect.swift in Sources */,
+				BBCBFE29A703F5BF9D2AB8A4 /* ContentView.swift in Sources */,
+				CA26647233F0A2E08F626D3E /* CoreImageEngine.swift in Sources */,
+				85B8AD6668CFA812AC316F4A /* DecimateApp.swift in Sources */,
+				C773E0BF1E18F9862BA16139 /* Effect.swift in Sources */,
+				10D2CCB02DE44C699F169CB9 /* EffectCatalog.swift in Sources */,
+				4D2C44AA1333C8F3D70CB365 /* EffectDeclaration.swift in Sources */,
+				EC28F65675712001243FACA8 /* FloydSteinbergEffect.swift in Sources */,
+				D188803695C708A22612A675 /* HalftoneEffect.swift in Sources */,
+				3E74A3489071C130D79FB27B /* ImageLoader.swift in Sources */,
+				471D7E7EFA3EC4AEE664987B /* NoiseEffect.swift in Sources */,
+				E785FCE4850881BAC5A96B6B /* ParameterPanel.swift in Sources */,
+				2133847750700DC751491B48 /* PixelEngine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		D3C1000000000000000000C1 /* Debug */ = {
+		2224FD4342DA48D39D6403F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = arm64;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
+					"DEBUG=1",
 				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-			};
-			name = Debug;
-		};
-		D3C1000000000000000000C2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = arm64;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				SDKROOT = macosx;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-			};
-			name = Release;
-		};
-		D3C1000000000000000000C4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.safaii.decimate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		D3C1000000000000000000C5 /* Release */ = {
+		4ECC307560E5E4C976715574 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -215,7 +266,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -224,8 +274,89 @@
 				);
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.safaii.decimate;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Decimate;
+				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		5EEAF4AC19ABF33B95EFB6F4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.safaii.decimate;
+				PRODUCT_NAME = Decimate;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+		9C315CEA3891888CE003AC81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -233,25 +364,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D3C1000000000000000000C0 /* Build configuration list for PBXProject "Decimate" */ = {
+		5D45F059197D611EC6C9CCA0 /* Build configuration list for PBXNativeTarget "Decimate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D3C1000000000000000000C1 /* Debug */,
-				D3C1000000000000000000C2 /* Release */,
+				4ECC307560E5E4C976715574 /* Debug */,
+				5EEAF4AC19ABF33B95EFB6F4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
-		D3C1000000000000000000C3 /* Build configuration list for PBXNativeTarget "Decimate" */ = {
+		66D2075006BECE26BFFFE0DA /* Build configuration list for PBXProject "Decimate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D3C1000000000000000000C4 /* Debug */,
-				D3C1000000000000000000C5 /* Release */,
+				2224FD4342DA48D39D6403F5 /* Debug */,
+				9C315CEA3891888CE003AC81 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = D3C1000000000000000000A0 /* Project object */;
+	rootObject = B1A758211E58ACB1ABA9D196 /* Project object */;
 }
