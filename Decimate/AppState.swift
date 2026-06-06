@@ -14,6 +14,11 @@ final class AppState {
     var parameterValues: [String: [String: ParameterValue]] = [:]
     var isImporterPresented = false
     var loadErrorMessage: String?
+    var previewImage: CGImage?
+    var isRenderingPreview = false
+    var renderErrorMessage: String?
+
+    private var previewTask: Task<Void, Never>?
 
     var selectedEffect: (any Effect)? {
         selectedEffectID.flatMap { EffectCatalog.effect(id: $0) }
@@ -25,8 +30,56 @@ final class AppState {
         do {
             sourceImage = try ImageLoader.loadCGImage(from: url)
             sourceURL = url
+            schedulePreviewRender()
         } catch {
             loadErrorMessage = "Couldn't open \(url.lastPathComponent) as an image."
+        }
+    }
+
+    // MARK: - Preview pipeline
+
+    /// Longest preview side per engine. Python effects (full Voronoi can take
+    /// minutes at full res) preview on a much smaller copy.
+    private static func previewCap(for engine: EffectEngine) -> Int {
+        switch engine {
+        case .python: 600
+        case .coreImage, .swiftPixel: 1200
+        }
+    }
+
+    /// Debounced, cancellable preview render on a downsampled copy of the source.
+    func schedulePreviewRender() {
+        previewTask?.cancel()
+        guard let source = sourceImage, let effect = selectedEffect else {
+            previewImage = nil
+            isRenderingPreview = false
+            renderErrorMessage = nil
+            return
+        }
+        let declaration = effect.declaration
+        let values = parameterValues[declaration.id] ?? declaration.defaultParameterValues
+
+        previewTask = Task {
+            do {
+                try await Task.sleep(for: .milliseconds(250))  // debounce slider drags
+                isRenderingPreview = true
+                let downsampled = ImageScaler.downsample(source, maxDimension: Self.previewCap(for: declaration.engine))
+                let output = try await effect.render(input: downsampled, parameters: values)
+                try Task.checkCancellation()
+                switch output {
+                case .image(let image):
+                    previewImage = image
+                case .points(let points):
+                    previewImage = try StippleRenderer.image(points, width: downsampled.width, height: downsampled.height)
+                }
+                renderErrorMessage = nil
+                isRenderingPreview = false
+            } catch is CancellationError {
+                // superseded by a newer render — leave state to the newer task
+            } catch {
+                renderErrorMessage = error.localizedDescription
+                isRenderingPreview = false
+            }
         }
     }
 

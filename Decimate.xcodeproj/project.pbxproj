@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0B7124097EE9679F5F6A8E67 /* BayerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3805954EFCA46D7BD83DEE /* BayerEffect.swift */; };
 		10D2CCB02DE44C699F169CB9 /* EffectCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7228B0A8B99B8E16E6569113 /* EffectCatalog.swift */; };
+		12877AE4B26949AF127B18D7 /* ImageScaler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BA853D9072BBC80B92BB82 /* ImageScaler.swift */; };
 		2133847750700DC751491B48 /* PixelEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A30CAFC7D002D31762513BD /* PixelEngine.swift */; };
 		3E74A3489071C130D79FB27B /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B59306553D254F6812BC20 /* ImageLoader.swift */; };
 		471D7E7EFA3EC4AEE664987B /* NoiseEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C545B36F6DED4C9CC2EC9BB2 /* NoiseEffect.swift */; };
@@ -32,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		0B1DBDF0956887D7F7130882 /* StippleRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StippleRenderer.swift; sourceTree = "<group>"; };
+		14BA853D9072BBC80B92BB82 /* ImageScaler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScaler.swift; sourceTree = "<group>"; };
 		1C9790069FBC3F4D34A5808D /* Effect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
 		28EC1EC939170D80E360AA07 /* StipplingEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StipplingEffect.swift; sourceTree = "<group>"; };
 		31A8A54F5B6FE6A3DCC36F04 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 				31A8A54F5B6FE6A3DCC36F04 /* ContentView.swift */,
 				DEF5F1D7347DA029AAA5010A /* DecimateApp.swift */,
 				D4B59306553D254F6812BC20 /* ImageLoader.swift */,
+				14BA853D9072BBC80B92BB82 /* ImageScaler.swift */,
 				17F04DFF39523CC962BC313A /* Effects */,
 				B215F9F6DA5DFC4D91D7047F /* Python */,
 				5D60A032747EA81F201C7939 /* UI */,
@@ -206,6 +209,7 @@
 				EC28F65675712001243FACA8 /* FloydSteinbergEffect.swift in Sources */,
 				D188803695C708A22612A675 /* HalftoneEffect.swift in Sources */,
 				3E74A3489071C130D79FB27B /* ImageLoader.swift in Sources */,
+				12877AE4B26949AF127B18D7 /* ImageScaler.swift in Sources */,
 				471D7E7EFA3EC4AEE664987B /* NoiseEffect.swift in Sources */,
 				E785FCE4850881BAC5A96B6B /* ParameterPanel.swift in Sources */,
 				2133847750700DC751491B48 /* PixelEngine.swift in Sources */,

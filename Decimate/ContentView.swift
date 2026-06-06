@@ -50,7 +50,7 @@ struct ContentView: View {
     @ViewBuilder
     private var previewArea: some View {
         Group {
-            if let cgImage = state.sourceImage {
+            if let cgImage = displayedImage {
                 Image(nsImage: NSImage(cgImage: cgImage, size: .zero))
                     .resizable()
                     .scaledToFit()
@@ -65,6 +65,29 @@ struct ContentView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.black.opacity(0.05))
+        .overlay(alignment: .topTrailing) {
+            if state.isRenderingPreview {
+                ProgressView()
+                    .controlSize(.small)
+                    .padding(10)
+            }
+        }
+        .overlay(alignment: .bottom) {
+            if let message = state.renderErrorMessage {
+                Label(message, systemImage: "exclamationmark.triangle.fill")
+                    .padding(8)
+                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 8))
+                    .padding()
+            }
+        }
+    }
+
+    /// Effect preview when one is selected and rendered; source image otherwise.
+    private var displayedImage: CGImage? {
+        if state.selectedEffect != nil, let preview = state.previewImage {
+            return preview
+        }
+        return state.sourceImage
     }
 
     private var controls: some View {
@@ -95,6 +118,11 @@ struct ContentView: View {
         .formStyle(.grouped)
         .onChange(of: state.selectedEffectID) { _, newValue in
             state.ensureParameterValues(for: newValue)
+            state.previewImage = nil
+            state.schedulePreviewRender()
+        }
+        .onChange(of: state.parameterValues) {
+            state.schedulePreviewRender()
         }
     }
 
