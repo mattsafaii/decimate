@@ -45,6 +45,10 @@ struct ContentView: View {
         }
         .task {
             await state.pythonEnvironment.setUpIfNeeded()
+            // Python-engine previews requested mid-setup fail fast; retry now that the venv is ready
+            if state.pythonEnvironment.status == .ready, state.selectedEffect?.declaration.engine == .python {
+                state.schedulePreviewRender()
+            }
         }
         .task {
             await DebugHarness.run(state: state)

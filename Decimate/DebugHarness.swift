@@ -9,11 +9,18 @@ import Foundation
 /// Inert when the arguments are absent.
 @MainActor
 enum DebugHarness {
+    /// Read `-name value` straight from the argument list — UserDefaults
+    /// tries to plist-parse values, which mangles JSON arguments.
+    private static func argument(_ name: String) -> String? {
+        let arguments = ProcessInfo.processInfo.arguments
+        guard let index = arguments.firstIndex(of: "-\(name)"), index + 1 < arguments.count else { return nil }
+        return arguments[index + 1]
+    }
+
     static func run(state: AppState) async {
-        let defaults = UserDefaults.standard
-        let openImage = defaults.string(forKey: "openImage")
-        let applyEffect = defaults.string(forKey: "applyEffect")
-        let verifyDump = defaults.string(forKey: "verifyDump")
+        let openImage = argument("openImage")
+        let applyEffect = argument("applyEffect")
+        let verifyDump = argument("verifyDump")
         guard openImage != nil || applyEffect != nil || verifyDump != nil else { return }
 
         if let openImage {
@@ -22,6 +29,20 @@ enum DebugHarness {
         if let applyEffect {
             state.selectedEffectID = applyEffect
             state.ensureParameterValues(for: applyEffect)
+            if let paramsJSON = argument("paramsJSON"),
+               let overrides = try? JSONSerialization.jsonObject(with: Data(paramsJSON.utf8)) as? [String: Any] {
+                var values = state.parameterValues[applyEffect] ?? [:]
+                for (key, value) in overrides {
+                    if let int = value as? Int {
+                        values[key] = .integer(int)
+                    } else if let double = value as? Double {
+                        values[key] = .double(double)
+                    } else if let string = value as? String {
+                        values[key] = .choice(string)
+                    }
+                }
+                state.parameterValues[applyEffect] = values
+            }
             state.schedulePreviewRender()
         }
         guard let verifyDump else { return }
