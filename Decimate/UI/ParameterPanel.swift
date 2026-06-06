@@ -7,12 +7,9 @@ struct ParameterPanel: View {
     @Binding var values: [String: ParameterValue]
 
     var body: some View {
-        Form {
-            ForEach(parameters) { parameter in
-                control(for: parameter)
-            }
+        ForEach(parameters) { parameter in
+            control(for: parameter)
         }
-        .formStyle(.grouped)
     }
 
     @ViewBuilder
