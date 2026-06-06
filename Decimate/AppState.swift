@@ -4,8 +4,10 @@ import Observation
 
 /// Shared state for the main window: loaded image, selected effect,
 /// and per-effect parameter values.
+@MainActor
 @Observable
 final class AppState {
+    let pythonEnvironment = PythonEnvironment()
     var sourceImage: CGImage?
     var sourceURL: URL?
     var selectedEffectID: String?

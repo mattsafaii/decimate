@@ -31,6 +31,9 @@ struct ContentView: View {
             state.loadImage(from: url)
             return true
         }
+        .task {
+            await state.pythonEnvironment.setUpIfNeeded()
+        }
         .alert(
             "Couldn't Open Image",
             isPresented: Binding(
@@ -83,10 +86,33 @@ struct ContentView: View {
                     )
                 }
             }
+            if state.pythonEnvironment.status != .ready {
+                Section("Python") {
+                    pythonStatus
+                }
+            }
         }
         .formStyle(.grouped)
         .onChange(of: state.selectedEffectID) { _, newValue in
             state.ensureParameterValues(for: newValue)
+        }
+    }
+
+    @ViewBuilder
+    private var pythonStatus: some View {
+        switch state.pythonEnvironment.status {
+        case .checking, .ready:
+            EmptyView()
+        case .settingUp(let message):
+            HStack(spacing: 8) {
+                ProgressView()
+                    .controlSize(.small)
+                Text(message)
+                    .foregroundStyle(.secondary)
+            }
+        case .failed(let message):
+            Label(message, systemImage: "exclamationmark.triangle.fill")
+                .foregroundStyle(.red)
         }
     }
 
