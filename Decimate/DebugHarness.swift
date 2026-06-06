@@ -65,8 +65,19 @@ enum DebugHarness {
             status["effect"] = effect.declaration.id
 
             if effect.declaration.engine == .python {
-                await waitUntil(timeout: 300) { state.pythonEnvironment.status == .ready || isEnvFailed(state) }
+                var transitions: [String] = [describeEnv(state)]
+                await waitUntil(timeout: 300) {
+                    let current = describeEnv(state)
+                    if current != transitions.last { transitions.append(current) }
+                    return state.pythonEnvironment.status == .ready || isEnvFailed(state)
+                }
                 status["pythonEnvironment"] = describeEnv(state)
+                status["pythonEnvironmentTransitions"] = transitions
+                // A preview requested mid-setup fails fast and is re-scheduled
+                // once the venv is ready — drop the stale error and wait for the retry.
+                if state.previewImage == nil {
+                    state.renderErrorMessage = nil
+                }
             }
 
             let started = Date()
