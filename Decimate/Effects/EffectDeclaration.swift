@@ -27,6 +27,9 @@ struct EffectParameter: Identifiable {
         case slider(range: ClosedRange<Double>, defaultValue: Double)
         case intSlider(range: ClosedRange<Int>, defaultValue: Int)
         case choice(options: [String], defaultValue: String)
+        case toggle(defaultValue: Bool)
+        case color(defaultValue: ColorValue)
+        case palette(defaultValue: Palette)
     }
 
     var defaultValue: ParameterValue {
@@ -34,6 +37,9 @@ struct EffectParameter: Identifiable {
         case .slider(_, let defaultValue): .double(defaultValue)
         case .intSlider(_, let defaultValue): .integer(defaultValue)
         case .choice(_, let defaultValue): .choice(defaultValue)
+        case .toggle(let defaultValue): .bool(defaultValue)
+        case .color(let defaultValue): .color(defaultValue)
+        case .palette(let defaultValue): .palette(defaultValue)
         }
     }
 }
@@ -43,12 +49,15 @@ enum ParameterValue: Equatable {
     case double(Double)
     case integer(Int)
     case choice(String)
+    case bool(Bool)
+    case color(ColorValue)
+    case palette(Palette)
 
     var doubleValue: Double {
         switch self {
         case .double(let value): value
         case .integer(let value): Double(value)
-        case .choice: 0
+        default: 0
         }
     }
 
@@ -56,7 +65,7 @@ enum ParameterValue: Equatable {
         switch self {
         case .double(let value): Int(value)
         case .integer(let value): value
-        case .choice: 0
+        default: 0
         }
     }
 
@@ -64,6 +73,28 @@ enum ParameterValue: Equatable {
         if case .choice(let value) = self { return value }
         return nil
     }
+
+    var boolValue: Bool {
+        if case .bool(let value) = self { return value }
+        return false
+    }
+
+    var colorValue: ColorValue? {
+        if case .color(let value) = self { return value }
+        return nil
+    }
+
+    var paletteValue: Palette? {
+        if case .palette(let value) = self { return value }
+        return nil
+    }
+}
+
+/// Whether an effect produces raster pixels or editable vector geometry.
+/// Drives which Affinity Send path is used (raster layer vs. editable curves).
+enum OutputType {
+    case raster
+    case vector
 }
 
 /// Everything the shell needs to present and route an effect.
@@ -73,6 +104,7 @@ struct EffectDeclaration {
     let engine: EffectEngine
     let parameters: [EffectParameter]
     let outputFormats: [OutputFormat]
+    let outputType: OutputType
 
     var defaultParameterValues: [String: ParameterValue] {
         Dictionary(uniqueKeysWithValues: parameters.map { ($0.id, $0.defaultValue) })

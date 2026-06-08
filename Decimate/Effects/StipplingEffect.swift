@@ -12,7 +12,8 @@ struct StipplingEffect: Effect {
             EffectParameter(id: "minRadius", label: "Min Dot Size", kind: .slider(range: 0.5...5, defaultValue: 1)),
             EffectParameter(id: "maxRadius", label: "Max Dot Size", kind: .slider(range: 0.5...10, defaultValue: 3)),
         ],
-        outputFormats: [.svg, .png]
+        outputFormats: [.svg, .png],
+        outputType: .vector
     )
 
     func render(input: CGImage, parameters: [String: ParameterValue]) async throws -> EffectOutput {

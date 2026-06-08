@@ -8,7 +8,8 @@ struct BayerEffect: Effect {
         parameters: [
             EffectParameter(id: "matrixSize", label: "Matrix", kind: .choice(options: ["2×2", "4×4", "8×8"], defaultValue: "4×4")),
         ],
-        outputFormats: [.png]
+        outputFormats: [.png],
+        outputType: .raster
     )
 
     func render(input: CGImage, parameters: [String: ParameterValue]) async throws -> EffectOutput {

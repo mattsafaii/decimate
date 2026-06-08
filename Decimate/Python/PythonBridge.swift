@@ -63,6 +63,10 @@ struct PythonBridge {
             case .double(let double): double
             case .integer(let int): int
             case .choice(let choice): choice
+            case .bool(let bool): bool
+            case .color(let color): ["r": color.red, "g": color.green, "b": color.blue, "a": color.alpha]
+            case .palette(let palette):
+                palette.colors.map { ["r": $0.red, "g": $0.green, "b": $0.blue, "a": $0.alpha] }
             }
         }
     }

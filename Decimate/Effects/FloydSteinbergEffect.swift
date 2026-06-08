@@ -8,7 +8,8 @@ struct FloydSteinbergEffect: Effect {
         parameters: [
             EffectParameter(id: "levels", label: "Levels", kind: .intSlider(range: 2...8, defaultValue: 2)),
         ],
-        outputFormats: [.png]
+        outputFormats: [.png],
+        outputType: .raster
     )
 
     func render(input: CGImage, parameters: [String: ParameterValue]) async throws -> EffectOutput {
