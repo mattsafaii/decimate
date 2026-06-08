@@ -5,8 +5,6 @@ enum EffectCatalog {
         StipplingEffect(),
         FloydSteinbergEffect(),
         BayerEffect(),
-        HalftoneEffect(),
-        NoiseEffect(),
     ]
 
     static func effect(id: String) -> (any Effect)? {
