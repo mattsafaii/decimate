@@ -97,7 +97,7 @@ The catalog is the four v2 effects: **Vector Stipple** (Python/SciPy point list 
 
 ## Basecamp
 
-Project config (account / project / todolist IDs) lives in `.basecamp/config.json`, and the doc/card/PRD references in `.basecamp/refs.md` — both gitignored, kept out of version control. The `basecamp` CLI reads the config automatically, so commands work without flags from this directory.
+Project config (account / project / todolist IDs) lives in `.basecamp/config.json` (gitignored), which the `basecamp` CLI reads automatically — commands work without flags from this directory. To find a PRD doc, run `basecamp docs list` and match by title (`PRD: [Cycle Name]` for cycles); the pitch lives on the project's card.
 
 Workflow: work the Build todolist in order, comment the commit SHA on each todo before checking it off.
 
