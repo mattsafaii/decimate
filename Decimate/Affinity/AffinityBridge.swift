@@ -213,6 +213,7 @@ final class AffinityBridge {
             }
             const lineStyle = LineStyleDescriptor.createDefault(\(strokeWidth));
             const def = PolyCurveNodeDefinition.create(pc, brushFill, lineStyle, lineFill, noFill);
+            def.userDescription = \(jsString(description));
             const b = AddChildNodesCommandBuilder.create();
             b.addNode(def);
             b.setInsertionTarget(doc.spreads.current || doc.spreads.first);
@@ -249,6 +250,7 @@ final class AffinityBridge {
             const noFill = FillDescriptor.createNone();
             const lineStyle = LineStyleDescriptor.createDefault();
             const def = PolyCurveNodeDefinition.create(pc, fill, lineStyle, noFill, noFill);
+            def.userDescription = \(jsString(description));
             const b = AddChildNodesCommandBuilder.create();
             b.addNode(def);
             b.setInsertionTarget(doc.spreads.current || doc.spreads.first);

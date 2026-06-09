@@ -79,6 +79,10 @@ enum DebugHarness {
         }
         status["sourceLoaded"] = state.sourceImage != nil
         status["loadError"] = state.loadErrorMessage ?? NSNull()
+        // Let the launch-time auto-connect settle to a terminal state.
+        await waitUntil(timeout: 10) {
+            state.affinity.status != .connecting && state.affinity.status != .disconnected
+        }
         status["affinityStatus"] = "\(state.affinity.status)"
         status["affinityError"] = state.affinityErrorMessage ?? NSNull()
 

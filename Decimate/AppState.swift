@@ -8,7 +8,15 @@ import Observation
 @Observable
 final class AppState {
     let pythonEnvironment = PythonEnvironment.shared
-    let affinity = AffinityBridge()
+    /// Bridge to Affinity. A `-affinityURL <url>` launch arg overrides the
+    /// endpoint (used by the harness to exercise the unreachable state).
+    let affinity: AffinityBridge = {
+        let args = ProcessInfo.processInfo.arguments
+        if let i = args.firstIndex(of: "-affinityURL"), i + 1 < args.count, let url = URL(string: args[i + 1]) {
+            return AffinityBridge(baseURL: url)
+        }
+        return AffinityBridge()
+    }()
     var sourceImage: CGImage?
     var sourceURL: URL?
     var isPullingFromAffinity = false
