@@ -12,6 +12,7 @@ final class AppState {
     var sourceImage: CGImage?
     var sourceURL: URL?
     var isPullingFromAffinity = false
+    var isSendingToAffinity = false
     var affinityErrorMessage: String?
     var selectedEffectID: String?
     var parameterValues: [String: [String: ParameterValue]] = [:]
@@ -57,6 +58,35 @@ final class AppState {
                 sourceImage = try await affinity.pull()
                 sourceURL = nil
                 schedulePreviewRender()
+            } catch {
+                affinityErrorMessage = error.localizedDescription
+            }
+        }
+    }
+
+    /// Renders the selected effect at full resolution and sends the result to
+    /// Affinity as a new layer (raster or editable curves per output type).
+    func sendToAffinity() {
+        guard let source = sourceImage, let effect = selectedEffect else { return }
+        let declaration = effect.declaration
+        let values = parameterValues[declaration.id] ?? declaration.defaultParameterValues
+        Task {
+            isSendingToAffinity = true
+            defer { isSendingToAffinity = false }
+            await affinity.ensureConnected()
+            guard affinity.status == .connected else {
+                affinityErrorMessage = affinity.status.message
+                return
+            }
+            do {
+                let output = try await effect.render(input: source, parameters: values)
+                let description = "Decimate: \(declaration.name)"
+                switch output {
+                case .image(let image):
+                    try await affinity.sendRaster(pngData: Self.pngData(image), description: description)
+                case .points(let points):
+                    try await affinity.sendVector(points, width: source.width, height: source.height, description: description)
+                }
             } catch {
                 affinityErrorMessage = error.localizedDescription
             }

@@ -28,6 +28,17 @@ struct ContentView: View {
                 }
             }
             ToolbarItem {
+                if state.isSendingToAffinity {
+                    ProgressView()
+                        .controlSize(.small)
+                } else {
+                    Button("Send to Affinity", systemImage: "square.and.arrow.up.on.square") {
+                        state.sendToAffinity()
+                    }
+                    .disabled(state.sourceImage == nil || state.selectedEffect == nil)
+                }
+            }
+            ToolbarItem {
                 if state.isExporting {
                     ProgressView()
                         .controlSize(.small)

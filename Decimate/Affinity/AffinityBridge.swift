@@ -34,14 +34,16 @@ final class AffinityBridge {
         }
     }
 
-    enum PullError: LocalizedError {
+    enum AffinityError: LocalizedError {
         case noDocument
         case unreadable
+        case vectorSendUnavailable
 
         var errorDescription: String? {
             switch self {
-            case .noDocument: "Affinity has no open document to pull."
+            case .noDocument: "Affinity has no open document."
             case .unreadable: "Couldn't read the image Affinity exported."
+            case .vectorSendUnavailable: "Sending editable curves isn't available yet."
             }
         }
     }
@@ -104,22 +106,85 @@ final class AffinityBridge {
         let output = try await execute(Self.pullScript(filename: filename))
         let trimmed = output.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        if trimmed.hasPrefix("OK:") {
-            let url = URL(fileURLWithPath: String(trimmed.dropFirst(3)))
-            defer { try? FileManager.default.removeItem(at: url) }
-            guard let image = try? ImageLoader.loadCGImage(from: url) else {
-                throw PullError.unreadable
-            }
-            return image
+        guard trimmed.hasPrefix("OK:") else { throw errorFor(trimmed) }
+        let url = URL(fileURLWithPath: String(trimmed.dropFirst(3)))
+        defer { try? FileManager.default.removeItem(at: url) }
+        guard let image = try? ImageLoader.loadCGImage(from: url) else {
+            throw AffinityError.unreadable
         }
-        if trimmed.contains("NO_DOCUMENT") { throw PullError.noDocument }
+        return image
+    }
 
+    // MARK: - Send (raster)
+
+    /// Writes the processed PNG to a Desktop temp file and injects it into the
+    /// active document as a new raster layer via `Bitmap.loadFromFile` +
+    /// `AddChildNodesCommandBuilder`, then removes the temp file.
+    func sendRaster(pngData: Data, description: String) async throws {
+        let url = Self.desktopURL("decimate-send-\(UUID().uuidString).png")
+        defer { try? FileManager.default.removeItem(at: url) }
+        try pngData.write(to: url)
+        let output = try await execute(Self.sendRasterScript(path: url.path, description: description))
+        if !output.trimmingCharacters(in: .whitespacesAndNewlines).hasPrefix("OK") {
+            throw errorFor(output)
+        }
+    }
+
+    // MARK: - Send (vector)
+
+    /// Injects stipple/curve geometry into Affinity as editable curves.
+    /// Implemented in the vector-Send todo.
+    func sendVector(_ points: [StipplePoint], width: Int, height: Int, description: String) async throws {
+        throw AffinityError.vectorSendUnavailable
+    }
+
+    /// Maps a script's non-OK output to an error, reflecting permission failures
+    /// in `status`. Shared by Pull and Send.
+    private func errorFor(_ output: String) -> Error {
+        let trimmed = output.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.contains("NO_DOCUMENT") { return AffinityError.noDocument }
         let message = trimmed.hasPrefix("ERR:") ? String(trimmed.dropFirst(4)) : trimmed
         let upper = message.uppercased()
         if upper.contains("PERMISSION_DENIED") || upper.contains("NOT_ALLOWED") {
             status = .permissionDenied(message)
         }
-        throw MCPClient.ClientError.rpc(code: -1, message: message)
+        return MCPClient.ClientError.rpc(code: -1, message: message)
+    }
+
+    static func desktopURL(_ filename: String) -> URL {
+        FileManager.default.homeDirectoryForCurrentUser
+            .appendingPathComponent("Desktop", isDirectory: true)
+            .appendingPathComponent(filename)
+    }
+
+    /// Encodes a Swift string as a JS string literal (quoted, escaped).
+    static func jsString(_ value: String) -> String {
+        (try? JSONEncoder().encode(value)).flatMap { String(data: $0, encoding: .utf8) } ?? "\"\""
+    }
+
+    private static func sendRasterScript(path: String, description: String) -> String {
+        """
+        try {
+          const { app } = require('/application');
+          const { ImageNodeDefinition, NodeChildType } = require('/nodes');
+          const { Bitmap, RasterFormat } = require('/rasterobject');
+          const { AddChildNodesCommandBuilder } = require('/commands');
+          const doc = app.documents.current;
+          if (!doc) { console.log('ERR:NO_DOCUMENT'); }
+          else {
+            const bmp = Bitmap.loadFromFile(\(jsString(path)), RasterFormat.RGBA8);
+            const nodeDef = ImageNodeDefinition.create(RasterFormat.RGBA8);
+            nodeDef.userDescription = \(jsString(description));
+            nodeDef.bitmap = bmp;
+            const spread = doc.spreads.current || doc.spreads.first;
+            const b = AddChildNodesCommandBuilder.create();
+            b.addNode(nodeDef);
+            b.setInsertionTarget(spread);
+            doc.executeCommand(b.createCommand(false, NodeChildType.Main));
+            console.log('OK');
+          }
+        } catch (e) { console.log('ERR:' + e); }
+        """
     }
 
     /// Full-res whole-document PNG export to a Desktop temp file. Prints
