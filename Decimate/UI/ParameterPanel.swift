@@ -103,23 +103,75 @@ struct ParameterPanel: View {
     }
 }
 
-/// Minimal palette display — a labeled row of swatches. The full editor
-/// (add/remove/reorder, bundled presets) is built on this binding later.
+/// In-session palette editor: pick a bundled preset, or edit colors (add /
+/// remove / recolor) which forks an unsaved "Custom" palette. No persistence
+/// beyond the session, by design.
 private struct PaletteControl: View {
     @Binding var palette: Palette
     let label: String
 
+    private let columns = [GridItem(.adaptive(minimum: 34), spacing: 6)]
+
     var body: some View {
-        LabeledContent(label) {
-            HStack(spacing: 2) {
-                ForEach(Array(palette.colors.enumerated()), id: \.offset) { _, color in
-                    RoundedRectangle(cornerRadius: 2)
-                        .fill(Color(color))
-                        .frame(width: 16, height: 16)
-                        .overlay(RoundedRectangle(cornerRadius: 2).strokeBorder(.separator))
+        VStack(alignment: .leading, spacing: 8) {
+            Picker(label, selection: presetBinding) {
+                ForEach(Palette.bundled) { Text($0.name).tag($0.id) }
+                if !isBundled { Text("Custom").tag("custom") }
+            }
+
+            LazyVGrid(columns: columns, alignment: .leading, spacing: 6) {
+                ForEach(palette.colors.indices, id: \.self) { index in
+                    ColorPicker("", selection: colorBinding(index), supportsOpacity: false)
+                        .labelsHidden()
+                        .overlay(alignment: .topTrailing) {
+                            if palette.colors.count > 1 {
+                                Button {
+                                    editColors { $0.remove(at: index) }
+                                } label: {
+                                    Image(systemName: "minus.circle.fill")
+                                        .font(.caption2)
+                                        .foregroundStyle(.secondary)
+                                }
+                                .buttonStyle(.plain)
+                                .offset(x: 4, y: -4)
+                            }
+                        }
                 }
+                Button {
+                    editColors { $0.append(.black) }
+                } label: {
+                    Image(systemName: "plus")
+                        .frame(width: 30, height: 22)
+                        .overlay(RoundedRectangle(cornerRadius: 4).strokeBorder(.separator))
+                }
+                .buttonStyle(.plain)
             }
         }
+    }
+
+    private var isBundled: Bool {
+        Palette.bundled.contains { $0.id == palette.id }
+    }
+
+    private var presetBinding: Binding<String> {
+        Binding(
+            get: { isBundled ? palette.id : "custom" },
+            set: { id in if let preset = Palette.bundled.first(where: { $0.id == id }) { palette = preset } }
+        )
+    }
+
+    private func colorBinding(_ index: Int) -> Binding<Color> {
+        Binding(
+            get: { index < palette.colors.count ? Color(palette.colors[index]) : .black },
+            set: { newColor in editColors { if index < $0.count { $0[index] = ColorValue(newColor) } } }
+        )
+    }
+
+    /// Mutates the color list and forks an unsaved "Custom" palette (fresh id).
+    private func editColors(_ transform: (inout [ColorValue]) -> Void) {
+        var colors = palette.colors
+        transform(&colors)
+        palette = Palette(name: "Custom", colors: colors)
     }
 }
 
