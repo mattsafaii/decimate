@@ -19,6 +19,26 @@ final class AffinityBridge {
 
         var isConnected: Bool { self == .connected }
 
+        /// Short label for the status indicator.
+        var shortTitle: String {
+            switch self {
+            case .disconnected: "Not connected"
+            case .connecting: "Connecting…"
+            case .connected: "Connected"
+            case .affinityUnavailable: "Affinity not reachable"
+            case .permissionDenied: "Permission needed"
+            case .failed: "Error"
+            }
+        }
+
+        /// True when the status warrants showing the setup-guidance message.
+        var needsSetup: Bool {
+            switch self {
+            case .affinityUnavailable, .permissionDenied, .failed: true
+            case .disconnected, .connecting, .connected: false
+            }
+        }
+
         /// Human-readable status / setup guidance for the UI.
         var message: String {
             switch self {
@@ -26,9 +46,9 @@ final class AffinityBridge {
             case .connecting: "Connecting to Affinity…"
             case .connected: "Connected to Affinity."
             case .affinityUnavailable:
-                "Affinity isn't reachable. Open Affinity and turn on its AI connector (it serves localhost:6767)."
+                "Affinity isn't reachable. Open Affinity and turn on its AI connector, which serves localhost:6767."
             case .permissionDenied:
-                "Affinity blocked filesystem access. Enable Affinity → Preferences → General → “Allow scripts to access the filesystem.”"
+                "Affinity blocked script access. In Affinity → Preferences → General, enable the AI connector and “Allow scripts to access the filesystem.”"
             case .failed(let detail): detail
             }
         }

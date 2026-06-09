@@ -44,6 +44,11 @@ final class AppState {
 
     // MARK: - Affinity
 
+    /// Opens (or retries) the Affinity connection so the status indicator reflects reality.
+    func connectAffinity() {
+        Task { await affinity.connect() }
+    }
+
     /// Pulls the active Affinity document at full resolution into the preview.
     func pullFromAffinity() {
         Task {

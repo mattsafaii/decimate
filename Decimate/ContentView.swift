@@ -74,6 +74,9 @@ struct ContentView: View {
         .task {
             await DebugHarness.run(state: state)
         }
+        .task {
+            await state.affinity.connect()
+        }
         .alert(
             "Couldn't Open Image",
             isPresented: Binding(
@@ -154,6 +157,9 @@ struct ContentView: View {
 
     private var controls: some View {
         Form {
+            Section("Affinity") {
+                affinityStatus
+            }
             Section("Effect") {
                 Picker("Effect", selection: $state.selectedEffectID) {
                     Text("None").tag(String?.none)
@@ -185,6 +191,43 @@ struct ContentView: View {
         }
         .onChange(of: state.parameterValues) {
             state.schedulePreviewRender()
+        }
+    }
+
+    @ViewBuilder
+    private var affinityStatus: some View {
+        let status = state.affinity.status
+        HStack(spacing: 8) {
+            switch status {
+            case .connecting:
+                ProgressView().controlSize(.small)
+            default:
+                Circle()
+                    .fill(statusColor(status))
+                    .frame(width: 8, height: 8)
+            }
+            Text(status.shortTitle)
+                .foregroundStyle(.secondary)
+            Spacer()
+            if !status.isConnected, status != .connecting {
+                Button("Connect") { state.connectAffinity() }
+                    .controlSize(.small)
+            }
+        }
+        if status.needsSetup {
+            Text(status.message)
+                .font(.callout)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    private func statusColor(_ status: AffinityBridge.Status) -> Color {
+        switch status {
+        case .connected: .green
+        case .connecting: .yellow
+        case .disconnected: .secondary
+        case .affinityUnavailable, .permissionDenied, .failed: .orange
         }
     }
 
