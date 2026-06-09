@@ -91,8 +91,8 @@ final class AppState {
                     try await affinity.sendRaster(pngData: Self.pngData(image), description: description)
                 case .points(let points):
                     try await affinity.sendVector(points, description: description)
-                case .paths(let paths, let strokeWidth):
-                    try await affinity.sendCurves(paths, strokeWidth: strokeWidth, description: description)
+                case .paths(let paths, let strokeWidth, let filled):
+                    try await affinity.sendCurves(paths, strokeWidth: strokeWidth, filled: filled, description: description)
                 }
             } catch {
                 affinityErrorMessage = error.localizedDescription
@@ -135,8 +135,8 @@ final class AppState {
                     previewImage = image
                 case .points(let points):
                     previewImage = try StippleRenderer.image(points, width: downsampled.width, height: downsampled.height)
-                case .paths(let paths, let strokeWidth):
-                    previewImage = try PathRenderer.image(paths, width: downsampled.width, height: downsampled.height, strokeWidth: strokeWidth)
+                case .paths(let paths, let strokeWidth, let filled):
+                    previewImage = try PathRenderer.image(paths, width: downsampled.width, height: downsampled.height, strokeWidth: strokeWidth, filled: filled)
                 }
                 renderErrorMessage = nil
                 isRenderingPreview = false

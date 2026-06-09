@@ -53,6 +53,6 @@ struct EngravingEffect: Effect {
             }
             paths.append(VectorPath(points))
         }
-        return .paths(paths, strokeWidth: weight)
+        return .paths(paths, strokeWidth: weight, filled: false)
     }
 }

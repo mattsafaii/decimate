@@ -164,22 +164,27 @@ final class AffinityBridge {
         }
     }
 
-    /// Injects stroked polylines (engraving / line-screen) into the active
-    /// document as a single editable PolyCurve node built with `CurveBuilder`.
-    func sendCurves(_ paths: [VectorPath], strokeWidth: Double, description: String) async throws {
+    /// Injects polylines (engraving / line-screen) into the active document as a
+    /// single editable PolyCurve node built with `CurveBuilder`. Stroked when
+    /// `filled` is false; filled (closed) when true.
+    func sendCurves(_ paths: [VectorPath], strokeWidth: Double, filled: Bool, description: String) async throws {
         let lines = paths
             .filter { $0.points.count > 1 }
             .map { path in path.points.map { [$0.x, $0.y] } }
         let linesJSON = (try? JSONSerialization.data(withJSONObject: lines))
             .flatMap { String(data: $0, encoding: .utf8) } ?? "[]"
-        let output = try await execute(Self.sendCurvesScript(linesJSON: linesJSON, strokeWidth: strokeWidth, description: description))
+        let output = try await execute(Self.sendCurvesScript(linesJSON: linesJSON, strokeWidth: strokeWidth, filled: filled, description: description))
         if !output.trimmingCharacters(in: .whitespacesAndNewlines).hasPrefix("OK") {
             throw errorFor(output)
         }
     }
 
-    private static func sendCurvesScript(linesJSON: String, strokeWidth: Double, description: String) -> String {
-        """
+    private static func sendCurvesScript(linesJSON: String, strokeWidth: Double, filled: Bool, description: String) -> String {
+        // Stroked: line fill only. Filled: brush fill, closed curves, no stroke.
+        let fills = filled
+            ? "const brushFill = solid; const lineFill = noFill; const closed = true;"
+            : "const brushFill = noFill; const lineFill = solid; const closed = false;"
+        return """
         try {
           const { app } = require('/application');
           const { PolyCurveNodeDefinition, NodeChildType } = require('/nodes');
@@ -194,18 +199,20 @@ final class AffinityBridge {
           else {
             const lines = \(linesJSON);
             const pc = new PolyCurve();
+            const solid = FillDescriptor.createSolid(Colour.createRGBA8(new RGBA8(0, 0, 0, 255)), BlendMode.Normal);
+            const noFill = FillDescriptor.createNone();
+            \(fills)
             for (let i = 0; i < lines.length; i++) {
               const ln = lines[i];
               if (ln.length < 2) continue;
               const cb = CurveBuilder.create();
               cb.beginXY(ln[0][0], ln[0][1]);
               for (let j = 1; j < ln.length; j++) cb.lineToXY(ln[j][0], ln[j][1]);
+              if (closed) cb.close();
               pc.addCurve(cb.createCurve());
             }
-            const noFill = FillDescriptor.createNone();
-            const lineFill = FillDescriptor.createSolid(Colour.createRGBA8(new RGBA8(0, 0, 0, 255)), BlendMode.Normal);
             const lineStyle = LineStyleDescriptor.createDefault(\(strokeWidth));
-            const def = PolyCurveNodeDefinition.create(pc, noFill, lineStyle, lineFill, noFill);
+            const def = PolyCurveNodeDefinition.create(pc, brushFill, lineStyle, lineFill, noFill);
             const b = AddChildNodesCommandBuilder.create();
             b.addNode(def);
             b.setInsertionTarget(doc.spreads.current || doc.spreads.first);

@@ -14,6 +14,7 @@
 		3E74A3489071C130D79FB27B /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B59306553D254F6812BC20 /* ImageLoader.swift */; };
 		4D2C44AA1333C8F3D70CB365 /* EffectDeclaration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CCAB536D4627D685EB3770 /* EffectDeclaration.swift */; };
 		543E29B6F9F8655F27EB7F8A /* PathRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B876342AF3A7B82AFC75F2D3 /* PathRenderer.swift */; };
+		668BCF96E48B86C903CCA878 /* LineScreenEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D91CAF39456F0434A491F1 /* LineScreenEffect.swift */; };
 		77C872D1D3FC2F63A5D4D497 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934613FFAAD457716CE0DDEE /* AppState.swift */; };
 		789C3DC9309665074DB8C3DD /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4ECB7D37C9E4173E14AAD8 /* JSONValue.swift */; };
 		85B8AD6668CFA812AC316F4A /* DecimateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF5F1D7347DA029AAA5010A /* DecimateApp.swift */; };
@@ -49,6 +50,7 @@
 		3FCE2D3A6EB654B5289A0764 /* AffinityBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AffinityBridge.swift; sourceTree = "<group>"; };
 		405BDFDDAFFF6A56D12F89E1 /* PythonBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PythonBridge.swift; sourceTree = "<group>"; };
 		4B914C65D7B5C69EDCA5080E /* CoreImageEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreImageEngine.swift; sourceTree = "<group>"; };
+		59D91CAF39456F0434A491F1 /* LineScreenEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineScreenEffect.swift; sourceTree = "<group>"; };
 		5A30CAFC7D002D31762513BD /* PixelEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelEngine.swift; sourceTree = "<group>"; };
 		5B6E0A3CA348EC9CCEC518EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7228B0A8B99B8E16E6569113 /* EffectCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectCatalog.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				A0CCAB536D4627D685EB3770 /* EffectDeclaration.swift */,
 				F2114C879A7D223EA9CEF274 /* EngravingEffect.swift */,
 				ED6AE2D0EBAF0F7D035F430D /* FloydSteinbergEffect.swift */,
+				59D91CAF39456F0434A491F1 /* LineScreenEffect.swift */,
 				BB256E0477133212E2BB8262 /* Palette.swift */,
 				B876342AF3A7B82AFC75F2D3 /* PathRenderer.swift */,
 				5A30CAFC7D002D31762513BD /* PixelEngine.swift */,
@@ -240,6 +243,7 @@
 				3E74A3489071C130D79FB27B /* ImageLoader.swift in Sources */,
 				12877AE4B26949AF127B18D7 /* ImageScaler.swift in Sources */,
 				789C3DC9309665074DB8C3DD /* JSONValue.swift in Sources */,
+				668BCF96E48B86C903CCA878 /* LineScreenEffect.swift in Sources */,
 				F76695384581E0E00E8476F2 /* MCPClient.swift in Sources */,
 				F0AFACDB3D7D9E289EFAEE71 /* Palette.swift in Sources */,
 				E785FCE4850881BAC5A96B6B /* ParameterPanel.swift in Sources */,

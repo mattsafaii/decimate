@@ -7,7 +7,9 @@ import CoreGraphics
 enum EffectOutput {
     case image(CGImage)
     case points([StipplePoint])
-    case paths([VectorPath], strokeWidth: Double)
+    /// Stroked polylines (engraving) when `filled` is false; filled closed
+    /// shapes (line-screen ribbons) when true. `strokeWidth` applies to strokes.
+    case paths([VectorPath], strokeWidth: Double, filled: Bool)
 }
 
 /// One stipple dot in image coordinates.

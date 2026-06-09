@@ -42,10 +42,10 @@ extension AppState {
                     data = StippleRenderer.svg(points, width: source.width, height: source.height)
                 case (.points(let points), .png):
                     data = try Self.pngData(StippleRenderer.image(points, width: source.width, height: source.height))
-                case (.paths(let paths, let strokeWidth), .svg):
-                    data = PathRenderer.svg(paths, width: source.width, height: source.height, strokeWidth: strokeWidth)
-                case (.paths(let paths, let strokeWidth), .png):
-                    data = try Self.pngData(PathRenderer.image(paths, width: source.width, height: source.height, strokeWidth: strokeWidth))
+                case (.paths(let paths, let strokeWidth, let filled), .svg):
+                    data = PathRenderer.svg(paths, width: source.width, height: source.height, strokeWidth: strokeWidth, filled: filled)
+                case (.paths(let paths, let strokeWidth, let filled), .png):
+                    data = try Self.pngData(PathRenderer.image(paths, width: source.width, height: source.height, strokeWidth: strokeWidth, filled: filled))
                 }
                 try data.write(to: url)
             } catch {
