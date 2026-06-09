@@ -22,24 +22,15 @@ enum DebugHarness {
         let openImage = argument("openImage")
         let pullAffinity = argument("pullAffinity") != nil
         let applyEffect = argument("applyEffect")
+        let sendAffinity = argument("sendAffinity") != nil
         let verifyDump = argument("verifyDump")
-        guard openImage != nil || pullAffinity || applyEffect != nil || verifyDump != nil else { return }
+        guard openImage != nil || pullAffinity || applyEffect != nil || sendAffinity || verifyDump != nil else { return }
 
         if let openImage {
             state.loadImage(from: URL(fileURLWithPath: openImage))
         }
         if pullAffinity {
-            await state.affinity.ensureConnected()
-            if state.affinity.status == .connected {
-                do {
-                    state.sourceImage = try await state.affinity.pull()
-                    state.sourceURL = nil
-                } catch {
-                    state.affinityErrorMessage = error.localizedDescription
-                }
-            } else {
-                state.affinityErrorMessage = state.affinity.status.message
-            }
+            await state.pullFromAffinityNow()
         }
         if let applyEffect {
             state.selectedEffectID = applyEffect
@@ -66,6 +57,12 @@ enum DebugHarness {
                 state.parameterValues[applyEffect] = values
             }
             state.schedulePreviewRender()
+        }
+        if sendAffinity {
+            if state.selectedEffect?.declaration.engine == .python {
+                await waitUntil(timeout: 300) { state.pythonEnvironment.status == .ready || isEnvFailed(state) }
+            }
+            await state.sendToAffinityNow()
         }
         guard let verifyDump else { return }
 

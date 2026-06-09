@@ -50,53 +50,57 @@ final class AppState {
     }
 
     /// Pulls the active Affinity document at full resolution into the preview.
-    func pullFromAffinity() {
-        Task {
-            isPullingFromAffinity = true
-            defer { isPullingFromAffinity = false }
-            await affinity.ensureConnected()
-            guard affinity.status == .connected else {
-                affinityErrorMessage = affinity.status.message
-                return
-            }
-            do {
-                sourceImage = try await affinity.pull()
-                sourceURL = nil
-                schedulePreviewRender()
-            } catch {
-                affinityErrorMessage = error.localizedDescription
-            }
-        }
-    }
+    func pullFromAffinity() { Task { await pullFromAffinityNow() } }
 
     /// Renders the selected effect at full resolution and sends the result to
     /// Affinity as a new layer (raster or editable curves per output type).
-    func sendToAffinity() {
+    func sendToAffinity() { Task { await sendToAffinityNow() } }
+
+    /// Awaitable Pull core — the round-trip's first leg. Used by the button and
+    /// the headless harness.
+    func pullFromAffinityNow() async {
+        isPullingFromAffinity = true
+        defer { isPullingFromAffinity = false }
+        await affinity.ensureConnected()
+        guard affinity.status == .connected else {
+            affinityErrorMessage = affinity.status.message
+            return
+        }
+        do {
+            sourceImage = try await affinity.pull()
+            sourceURL = nil
+            schedulePreviewRender()
+        } catch {
+            affinityErrorMessage = error.localizedDescription
+        }
+    }
+
+    /// Awaitable Send core — the round-trip's last leg. Renders the selected
+    /// effect full-res on the current source and injects it into Affinity.
+    func sendToAffinityNow() async {
         guard let source = sourceImage, let effect = selectedEffect else { return }
         let declaration = effect.declaration
         let values = parameterValues[declaration.id] ?? declaration.defaultParameterValues
-        Task {
-            isSendingToAffinity = true
-            defer { isSendingToAffinity = false }
-            await affinity.ensureConnected()
-            guard affinity.status == .connected else {
-                affinityErrorMessage = affinity.status.message
-                return
+        isSendingToAffinity = true
+        defer { isSendingToAffinity = false }
+        await affinity.ensureConnected()
+        guard affinity.status == .connected else {
+            affinityErrorMessage = affinity.status.message
+            return
+        }
+        do {
+            let output = try await effect.render(input: source, parameters: values)
+            let description = "Decimate: \(declaration.name)"
+            switch output {
+            case .image(let image):
+                try await affinity.sendRaster(pngData: Self.pngData(image), description: description)
+            case .points(let points):
+                try await affinity.sendVector(points, description: description)
+            case .paths(let paths, let strokeWidth, let filled):
+                try await affinity.sendCurves(paths, strokeWidth: strokeWidth, filled: filled, description: description)
             }
-            do {
-                let output = try await effect.render(input: source, parameters: values)
-                let description = "Decimate: \(declaration.name)"
-                switch output {
-                case .image(let image):
-                    try await affinity.sendRaster(pngData: Self.pngData(image), description: description)
-                case .points(let points):
-                    try await affinity.sendVector(points, description: description)
-                case .paths(let paths, let strokeWidth, let filled):
-                    try await affinity.sendCurves(paths, strokeWidth: strokeWidth, filled: filled, description: description)
-                }
-            } catch {
-                affinityErrorMessage = error.localizedDescription
-            }
+        } catch {
+            affinityErrorMessage = error.localizedDescription
         }
     }
 
