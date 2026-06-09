@@ -58,6 +58,13 @@ enum DebugHarness {
                 }
                 state.parameterValues[applyEffect] = values
             }
+            // -palette <id> selects a bundled palette for palette-typed params.
+            if let paletteID = argument("palette"),
+               let palette = Palette.bundled.first(where: { $0.id == paletteID }) {
+                var values = state.parameterValues[applyEffect] ?? [:]
+                values["palette"] = .palette(palette)
+                state.parameterValues[applyEffect] = values
+            }
             state.schedulePreviewRender()
         }
         guard let verifyDump else { return }
