@@ -3,8 +3,8 @@ import Foundation
 
 struct StipplingEffect: Effect {
     let declaration = EffectDeclaration(
-        id: "stippling",
-        name: "Stippling",
+        id: "vector-stipple",
+        name: "Vector Stipple",
         engine: .python,
         parameters: [
             EffectParameter(id: "points", label: "Points", kind: .intSlider(range: 100...20000, defaultValue: 4000)),

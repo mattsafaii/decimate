@@ -1,7 +1,8 @@
 import CoreGraphics
 
 /// What an effect produces. Image effects return pixels; vector effects
-/// (stippling) return geometry that the rendering layer turns into SVG or PNG.
+/// (Vector Stipple) return a point list the rendering layer turns into SVG/PNG
+/// for export, or editable curves when sent to Affinity.
 enum EffectOutput {
     case image(CGImage)
     case points([StipplePoint])
