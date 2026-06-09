@@ -164,6 +164,58 @@ final class AffinityBridge {
         }
     }
 
+    /// Injects stroked polylines (engraving / line-screen) into the active
+    /// document as a single editable PolyCurve node built with `CurveBuilder`.
+    func sendCurves(_ paths: [VectorPath], strokeWidth: Double, description: String) async throws {
+        let lines = paths
+            .filter { $0.points.count > 1 }
+            .map { path in path.points.map { [$0.x, $0.y] } }
+        let linesJSON = (try? JSONSerialization.data(withJSONObject: lines))
+            .flatMap { String(data: $0, encoding: .utf8) } ?? "[]"
+        let output = try await execute(Self.sendCurvesScript(linesJSON: linesJSON, strokeWidth: strokeWidth, description: description))
+        if !output.trimmingCharacters(in: .whitespacesAndNewlines).hasPrefix("OK") {
+            throw errorFor(output)
+        }
+    }
+
+    private static func sendCurvesScript(linesJSON: String, strokeWidth: Double, description: String) -> String {
+        """
+        try {
+          const { app } = require('/application');
+          const { PolyCurveNodeDefinition, NodeChildType } = require('/nodes');
+          const { PolyCurve, CurveBuilder } = require('/geometry');
+          const { FillDescriptor } = require('/fills');
+          const { Colour, RGBA8 } = require('/colours');
+          const { LineStyleDescriptor } = require('/linestyle');
+          const { BlendMode } = require('affinity:common');
+          const { AddChildNodesCommandBuilder } = require('/commands');
+          const doc = app.documents.current;
+          if (!doc) { console.log('ERR:NO_DOCUMENT'); }
+          else {
+            const lines = \(linesJSON);
+            const pc = new PolyCurve();
+            for (let i = 0; i < lines.length; i++) {
+              const ln = lines[i];
+              if (ln.length < 2) continue;
+              const cb = CurveBuilder.create();
+              cb.beginXY(ln[0][0], ln[0][1]);
+              for (let j = 1; j < ln.length; j++) cb.lineToXY(ln[j][0], ln[j][1]);
+              pc.addCurve(cb.createCurve());
+            }
+            const noFill = FillDescriptor.createNone();
+            const lineFill = FillDescriptor.createSolid(Colour.createRGBA8(new RGBA8(0, 0, 0, 255)), BlendMode.Normal);
+            const lineStyle = LineStyleDescriptor.createDefault(\(strokeWidth));
+            const def = PolyCurveNodeDefinition.create(pc, noFill, lineStyle, lineFill, noFill);
+            const b = AddChildNodesCommandBuilder.create();
+            b.addNode(def);
+            b.setInsertionTarget(doc.spreads.current || doc.spreads.first);
+            doc.executeCommand(b.createCommand(false, NodeChildType.Main));
+            console.log('OK');
+          }
+        } catch (e) { console.log('ERR:' + e); }
+        """
+    }
+
     /// One PolyCurve node, one filled black ellipse per dot, on the current
     /// spread. Dots are `[x, y, radius]` in document-pixel coordinates.
     private static func sendVectorScript(dotsJSON: String, description: String) -> String {

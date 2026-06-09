@@ -3,6 +3,7 @@
 enum EffectCatalog {
     static let all: [any Effect] = [
         StipplingEffect(),
+        EngravingEffect(),
         FloydSteinbergEffect(),
         BayerEffect(),
     ]

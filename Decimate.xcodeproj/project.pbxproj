@@ -13,6 +13,7 @@
 		2133847750700DC751491B48 /* PixelEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A30CAFC7D002D31762513BD /* PixelEngine.swift */; };
 		3E74A3489071C130D79FB27B /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B59306553D254F6812BC20 /* ImageLoader.swift */; };
 		4D2C44AA1333C8F3D70CB365 /* EffectDeclaration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CCAB536D4627D685EB3770 /* EffectDeclaration.swift */; };
+		543E29B6F9F8655F27EB7F8A /* PathRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B876342AF3A7B82AFC75F2D3 /* PathRenderer.swift */; };
 		77C872D1D3FC2F63A5D4D497 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934613FFAAD457716CE0DDEE /* AppState.swift */; };
 		789C3DC9309665074DB8C3DD /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4ECB7D37C9E4173E14AAD8 /* JSONValue.swift */; };
 		85B8AD6668CFA812AC316F4A /* DecimateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF5F1D7347DA029AAA5010A /* DecimateApp.swift */; };
@@ -26,6 +27,7 @@
 		D3FC1C4CCEE32FB944444413 /* python in Resources */ = {isa = PBXBuildFile; fileRef = 874BDF3DF3039EE9D47A77CF /* python */; };
 		DCDCC3D32BCB6133626F5B9A /* Exporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328AE2F8BB3F6C0A6477D4C4 /* Exporter.swift */; };
 		DE92190951A41AA082F11A5A /* StipplingEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EC1EC939170D80E360AA07 /* StipplingEffect.swift */; };
+		E459CABE0DF93CAB109E2BD3 /* EngravingEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2114C879A7D223EA9CEF274 /* EngravingEffect.swift */; };
 		E785FCE4850881BAC5A96B6B /* ParameterPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7E2661E80BB0E6D6D73B0D /* ParameterPanel.swift */; };
 		E92B9D12AA2BE499DC2EFD75 /* StippleRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1DBDF0956887D7F7130882 /* StippleRenderer.swift */; };
 		E9860D316D52C2A310D5335C /* PythonEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D863DAE460675D35440C7E /* PythonEnvironment.swift */; };
@@ -58,10 +60,12 @@
 		9F7E2661E80BB0E6D6D73B0D /* ParameterPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterPanel.swift; sourceTree = "<group>"; };
 		A0CCAB536D4627D685EB3770 /* EffectDeclaration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectDeclaration.swift; sourceTree = "<group>"; };
 		A4D863DAE460675D35440C7E /* PythonEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PythonEnvironment.swift; sourceTree = "<group>"; };
+		B876342AF3A7B82AFC75F2D3 /* PathRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathRenderer.swift; sourceTree = "<group>"; };
 		BB256E0477133212E2BB8262 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		D4B59306553D254F6812BC20 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		DEF5F1D7347DA029AAA5010A /* DecimateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimateApp.swift; sourceTree = "<group>"; };
 		ED6AE2D0EBAF0F7D035F430D /* FloydSteinbergEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloydSteinbergEffect.swift; sourceTree = "<group>"; };
+		F2114C879A7D223EA9CEF274 /* EngravingEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngravingEffect.swift; sourceTree = "<group>"; };
 		F9C9C869DA44FA622C54A256 /* Decimate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Decimate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -93,8 +97,10 @@
 				1C9790069FBC3F4D34A5808D /* Effect.swift */,
 				7228B0A8B99B8E16E6569113 /* EffectCatalog.swift */,
 				A0CCAB536D4627D685EB3770 /* EffectDeclaration.swift */,
+				F2114C879A7D223EA9CEF274 /* EngravingEffect.swift */,
 				ED6AE2D0EBAF0F7D035F430D /* FloydSteinbergEffect.swift */,
 				BB256E0477133212E2BB8262 /* Palette.swift */,
+				B876342AF3A7B82AFC75F2D3 /* PathRenderer.swift */,
 				5A30CAFC7D002D31762513BD /* PixelEngine.swift */,
 				0B1DBDF0956887D7F7130882 /* StippleRenderer.swift */,
 				28EC1EC939170D80E360AA07 /* StipplingEffect.swift */,
@@ -228,6 +234,7 @@
 				C773E0BF1E18F9862BA16139 /* Effect.swift in Sources */,
 				10D2CCB02DE44C699F169CB9 /* EffectCatalog.swift in Sources */,
 				4D2C44AA1333C8F3D70CB365 /* EffectDeclaration.swift in Sources */,
+				E459CABE0DF93CAB109E2BD3 /* EngravingEffect.swift in Sources */,
 				DCDCC3D32BCB6133626F5B9A /* Exporter.swift in Sources */,
 				EC28F65675712001243FACA8 /* FloydSteinbergEffect.swift in Sources */,
 				3E74A3489071C130D79FB27B /* ImageLoader.swift in Sources */,
@@ -236,6 +243,7 @@
 				F76695384581E0E00E8476F2 /* MCPClient.swift in Sources */,
 				F0AFACDB3D7D9E289EFAEE71 /* Palette.swift in Sources */,
 				E785FCE4850881BAC5A96B6B /* ParameterPanel.swift in Sources */,
+				543E29B6F9F8655F27EB7F8A /* PathRenderer.swift in Sources */,
 				2133847750700DC751491B48 /* PixelEngine.swift in Sources */,
 				B413E9C5348246B4FB56206E /* PythonBridge.swift in Sources */,
 				E9860D316D52C2A310D5335C /* PythonEnvironment.swift in Sources */,
