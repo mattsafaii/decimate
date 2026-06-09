@@ -88,3 +88,7 @@ is unreachable or access is blocked.
 
 Personal tooling. The long-term vision is a fully distributed app with a growing
 effect catalog.
+
+## License
+
+[GPL-3.0](LICENSE).
