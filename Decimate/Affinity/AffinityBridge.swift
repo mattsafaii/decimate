@@ -37,13 +37,11 @@ final class AffinityBridge {
     enum AffinityError: LocalizedError {
         case noDocument
         case unreadable
-        case vectorSendUnavailable
 
         var errorDescription: String? {
             switch self {
             case .noDocument: "Affinity has no open document."
             case .unreadable: "Couldn't read the image Affinity exported."
-            case .vectorSendUnavailable: "Sending editable curves isn't available yet."
             }
         }
     }
@@ -132,10 +130,54 @@ final class AffinityBridge {
 
     // MARK: - Send (vector)
 
-    /// Injects stipple/curve geometry into Affinity as editable curves.
-    /// Implemented in the vector-Send todo.
-    func sendVector(_ points: [StipplePoint], width: Int, height: Int, description: String) async throws {
-        throw AffinityError.vectorSendUnavailable
+    /// Injects stipple dots into the active document as a single editable
+    /// PolyCurve node — one filled ellipse per dot — via `Curve.createEllipse`
+    /// + `PolyCurveNodeDefinition`. Geometry travels in the script itself (no
+    /// temp file): dots are compact and need no Desktop access.
+    func sendVector(_ points: [StipplePoint], description: String) async throws {
+        let dots = points.map { [$0.x, $0.y, $0.radius] }
+        let dotsJSON = (try? JSONSerialization.data(withJSONObject: dots))
+            .flatMap { String(data: $0, encoding: .utf8) } ?? "[]"
+        let output = try await execute(Self.sendVectorScript(dotsJSON: dotsJSON, description: description))
+        if !output.trimmingCharacters(in: .whitespacesAndNewlines).hasPrefix("OK") {
+            throw errorFor(output)
+        }
+    }
+
+    /// One PolyCurve node, one filled black ellipse per dot, on the current
+    /// spread. Dots are `[x, y, radius]` in document-pixel coordinates.
+    private static func sendVectorScript(dotsJSON: String, description: String) -> String {
+        """
+        try {
+          const { app } = require('/application');
+          const { PolyCurveNodeDefinition, NodeChildType } = require('/nodes');
+          const { PolyCurve, Curve, Rectangle } = require('/geometry');
+          const { FillDescriptor } = require('/fills');
+          const { Colour, RGBA8 } = require('/colours');
+          const { LineStyleDescriptor } = require('/linestyle');
+          const { BlendMode } = require('affinity:common');
+          const { AddChildNodesCommandBuilder } = require('/commands');
+          const doc = app.documents.current;
+          if (!doc) { console.log('ERR:NO_DOCUMENT'); }
+          else {
+            const dots = \(dotsJSON);
+            const pc = new PolyCurve();
+            for (let i = 0; i < dots.length; i++) {
+              const d = dots[i];
+              pc.addCurve(Curve.createEllipse(new Rectangle(d[0] - d[2], d[1] - d[2], 2 * d[2], 2 * d[2])));
+            }
+            const fill = FillDescriptor.createSolid(Colour.createRGBA8(new RGBA8(0, 0, 0, 255)), BlendMode.Normal);
+            const noFill = FillDescriptor.createNone();
+            const lineStyle = LineStyleDescriptor.createDefault();
+            const def = PolyCurveNodeDefinition.create(pc, fill, lineStyle, noFill, noFill);
+            const b = AddChildNodesCommandBuilder.create();
+            b.addNode(def);
+            b.setInsertionTarget(doc.spreads.current || doc.spreads.first);
+            doc.executeCommand(b.createCommand(false, NodeChildType.Main));
+            console.log('OK');
+          }
+        } catch (e) { console.log('ERR:' + e); }
+        """
     }
 
     /// Maps a script's non-OK output to an error, reflecting permission failures

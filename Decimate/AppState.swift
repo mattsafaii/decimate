@@ -85,7 +85,7 @@ final class AppState {
                 case .image(let image):
                     try await affinity.sendRaster(pngData: Self.pngData(image), description: description)
                 case .points(let points):
-                    try await affinity.sendVector(points, width: source.width, height: source.height, description: description)
+                    try await affinity.sendVector(points, description: description)
                 }
             } catch {
                 affinityErrorMessage = error.localizedDescription
