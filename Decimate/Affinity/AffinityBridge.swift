@@ -1,3 +1,4 @@
+import CoreGraphics
 import Foundation
 import Observation
 
@@ -17,6 +18,32 @@ final class AffinityBridge {
         case failed(String)
 
         var isConnected: Bool { self == .connected }
+
+        /// Human-readable status / setup guidance for the UI.
+        var message: String {
+            switch self {
+            case .disconnected: "Not connected to Affinity."
+            case .connecting: "Connecting to Affinity…"
+            case .connected: "Connected to Affinity."
+            case .affinityUnavailable:
+                "Affinity isn't reachable. Open Affinity and turn on its AI connector (it serves localhost:6767)."
+            case .permissionDenied:
+                "Affinity blocked filesystem access. Enable Affinity → Preferences → General → “Allow scripts to access the filesystem.”"
+            case .failed(let detail): detail
+            }
+        }
+    }
+
+    enum PullError: LocalizedError {
+        case noDocument
+        case unreadable
+
+        var errorDescription: String? {
+            switch self {
+            case .noDocument: "Affinity has no open document to pull."
+            case .unreadable: "Couldn't read the image Affinity exported."
+            }
+        }
     }
 
     private(set) var status: Status = .disconnected
@@ -61,6 +88,58 @@ final class AffinityBridge {
         await client?.disconnect()
         client = nil
         status = .disconnected
+    }
+
+    /// Connects if not already connected. Safe to call before each operation.
+    func ensureConnected() async {
+        if status != .connected { await connect() }
+    }
+
+    // MARK: - Pull
+
+    /// Exports the active Affinity document at full resolution to a Desktop temp
+    /// file, loads it as a CGImage, then removes the temp file.
+    func pull() async throws -> CGImage {
+        let filename = "decimate-pull-\(UUID().uuidString).png"
+        let output = try await execute(Self.pullScript(filename: filename))
+        let trimmed = output.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if trimmed.hasPrefix("OK:") {
+            let url = URL(fileURLWithPath: String(trimmed.dropFirst(3)))
+            defer { try? FileManager.default.removeItem(at: url) }
+            guard let image = try? ImageLoader.loadCGImage(from: url) else {
+                throw PullError.unreadable
+            }
+            return image
+        }
+        if trimmed.contains("NO_DOCUMENT") { throw PullError.noDocument }
+
+        let message = trimmed.hasPrefix("ERR:") ? String(trimmed.dropFirst(4)) : trimmed
+        let upper = message.uppercased()
+        if upper.contains("PERMISSION_DENIED") || upper.contains("NOT_ALLOWED") {
+            status = .permissionDenied(message)
+        }
+        throw MCPClient.ClientError.rpc(code: -1, message: message)
+    }
+
+    /// Full-res whole-document PNG export to a Desktop temp file. Prints
+    /// `OK:<path>` on success or `ERR:<reason>` (e.g. NO_DOCUMENT, PERMISSION_DENIED).
+    private static func pullScript(filename: String) -> String {
+        """
+        try {
+          const { app } = require('/application');
+          const { FileExportOptions, FileExportArea } = require('/document');
+          const doc = app.documents.current;
+          if (!doc) { console.log('ERR:NO_DOCUMENT'); }
+          else {
+            const path = app.userDesktopPath + '/\(filename)';
+            const opts = FileExportOptions.createWithPresetName('PNG');
+            const area = FileExportArea.createForWholeDocument();
+            doc.export(path, opts, area);
+            console.log('OK:' + path);
+          }
+        } catch (e) { console.log('ERR:' + e); }
+        """
     }
 
     private func initializeSession() async throws {

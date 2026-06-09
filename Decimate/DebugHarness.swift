@@ -3,6 +3,7 @@ import Foundation
 
 /// Headless verification hooks for build tooling, driven by launch arguments:
 ///   -openImage <path>    load an image at launch (real ImageLoader path)
+///   -pullAffinity <any>   connect to Affinity and pull the active document
 ///   -applyEffect <id>    select an effect and render its preview
 ///   -verifyDump <dir>    write source.png, preview.png, full-res exports, and
 ///                        status.json into <dir>, then quit
@@ -19,12 +20,26 @@ enum DebugHarness {
 
     static func run(state: AppState) async {
         let openImage = argument("openImage")
+        let pullAffinity = argument("pullAffinity") != nil
         let applyEffect = argument("applyEffect")
         let verifyDump = argument("verifyDump")
-        guard openImage != nil || applyEffect != nil || verifyDump != nil else { return }
+        guard openImage != nil || pullAffinity || applyEffect != nil || verifyDump != nil else { return }
 
         if let openImage {
             state.loadImage(from: URL(fileURLWithPath: openImage))
+        }
+        if pullAffinity {
+            await state.affinity.ensureConnected()
+            if state.affinity.status == .connected {
+                do {
+                    state.sourceImage = try await state.affinity.pull()
+                    state.sourceURL = nil
+                } catch {
+                    state.affinityErrorMessage = error.localizedDescription
+                }
+            } else {
+                state.affinityErrorMessage = state.affinity.status.message
+            }
         }
         if let applyEffect {
             state.selectedEffectID = applyEffect
@@ -60,6 +75,8 @@ enum DebugHarness {
         }
         status["sourceLoaded"] = state.sourceImage != nil
         status["loadError"] = state.loadErrorMessage ?? NSNull()
+        status["affinityStatus"] = "\(state.affinity.status)"
+        status["affinityError"] = state.affinityErrorMessage ?? NSNull()
 
         if let effect = state.selectedEffect {
             status["effect"] = effect.declaration.id

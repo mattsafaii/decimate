@@ -40,7 +40,8 @@ actor MCPClient {
     /// connect. Lets the bridge reflect a dropped connection in its status.
     private var disconnectHandler: (@Sendable (Error) -> Void)?
 
-    init(baseURL: URL, requestTimeout: Duration = .seconds(30)) {
+    // Generous: a full-res export of a large document can take ~30s+.
+    init(baseURL: URL, requestTimeout: Duration = .seconds(180)) {
         self.baseURL = baseURL
         self.requestTimeout = requestTimeout
         let config = URLSessionConfiguration.ephemeral
@@ -162,18 +163,35 @@ actor MCPClient {
     private func readStream(_ bytes: URLSession.AsyncBytes) async {
         var event = "message"
         var dataLines: [String] = []
-        do {
-            for try await line in bytes.lines {
-                if line.isEmpty {
+        var lineBytes: [UInt8] = []
+
+        // SSE delimits events with a blank line. `AsyncLineSequence` drops blank
+        // lines, so we split the raw byte stream ourselves to preserve them.
+        func handle(_ line: String) {
+            if line.isEmpty {
+                if !dataLines.isEmpty || event != "message" {
                     dispatch(event: event, data: dataLines.joined(separator: "\n"))
-                    event = "message"
-                    dataLines.removeAll()
-                } else if line.hasPrefix(":") {
-                    continue  // comment / keep-alive
-                } else if let value = field("event", in: line) {
-                    event = value
-                } else if let value = field("data", in: line) {
-                    dataLines.append(value)
+                }
+                event = "message"
+                dataLines.removeAll()
+            } else if line.hasPrefix(":") {
+                return  // comment / keep-alive
+            } else if let value = field("event", in: line) {
+                event = value
+            } else if let value = field("data", in: line) {
+                dataLines.append(value)
+            }
+        }
+
+        do {
+            for try await byte in bytes {
+                if byte == 0x0A {  // \n
+                    var line = String(decoding: lineBytes, as: UTF8.self)
+                    if line.hasSuffix("\r") { line.removeLast() }
+                    lineBytes.removeAll(keepingCapacity: true)
+                    handle(line)
+                } else {
+                    lineBytes.append(byte)
                 }
             }
             handleStreamEnd(ClientError.connectionFailed("stream closed"))

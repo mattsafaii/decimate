@@ -18,6 +18,16 @@ struct ContentView: View {
                 }
             }
             ToolbarItem {
+                if state.isPullingFromAffinity {
+                    ProgressView()
+                        .controlSize(.small)
+                } else {
+                    Button("Pull from Affinity", systemImage: "square.and.arrow.down") {
+                        state.pullFromAffinity()
+                    }
+                }
+            }
+            ToolbarItem {
                 if state.isExporting {
                     ProgressView()
                         .controlSize(.small)
@@ -74,6 +84,17 @@ struct ContentView: View {
             Button("OK", role: .cancel) {}
         } message: {
             Text(state.exportErrorMessage ?? "")
+        }
+        .alert(
+            "Affinity",
+            isPresented: Binding(
+                get: { state.affinityErrorMessage != nil },
+                set: { if !$0 { state.affinityErrorMessage = nil } }
+            )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(state.affinityErrorMessage ?? "")
         }
     }
 

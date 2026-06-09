@@ -8,8 +8,11 @@ import Observation
 @Observable
 final class AppState {
     let pythonEnvironment = PythonEnvironment.shared
+    let affinity = AffinityBridge()
     var sourceImage: CGImage?
     var sourceURL: URL?
+    var isPullingFromAffinity = false
+    var affinityErrorMessage: String?
     var selectedEffectID: String?
     var parameterValues: [String: [String: ParameterValue]] = [:]
     var isImporterPresented = false
@@ -35,6 +38,28 @@ final class AppState {
             schedulePreviewRender()
         } catch {
             loadErrorMessage = "Couldn't open \(url.lastPathComponent) as an image."
+        }
+    }
+
+    // MARK: - Affinity
+
+    /// Pulls the active Affinity document at full resolution into the preview.
+    func pullFromAffinity() {
+        Task {
+            isPullingFromAffinity = true
+            defer { isPullingFromAffinity = false }
+            await affinity.ensureConnected()
+            guard affinity.status == .connected else {
+                affinityErrorMessage = affinity.status.message
+                return
+            }
+            do {
+                sourceImage = try await affinity.pull()
+                sourceURL = nil
+                schedulePreviewRender()
+            } catch {
+                affinityErrorMessage = error.localizedDescription
+            }
         }
     }
 
