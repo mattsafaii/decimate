@@ -4,3 +4,6 @@ xcuserdata/
 DerivedData/
 build/
 *.xcuserstate
+
+# Solo (local process registration)
+solo.yml
